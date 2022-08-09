@@ -3,20 +3,21 @@ import styled from "styled-components";
 
 export default function Login() {
   const handleClick = async () => {
-    let hashParams = {};
-    let e,
-      r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    while ((e = r.exec(q))) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-
-    if (!hashParams.access_token) {
-      window.location.href =
-        "https://accounts.spotify.com/authorize?client_id=230be2f46909426b8b80cac36446b52a&scope=playlist-read-private%20playlist-read-collaborative%20playlist-modify-public%20user-read-recently-played%20playlist-modify-private%20ugc-image-upload%20user-follow-modify%20user-follow-read%20user-library-read%20user-library-modify%20user-read-private%20user-read-email%20user-top-read%20user-read-playback-state&response_type=token&redirect_uri=http://localhost:3000/callback";
-    } else {
-      this.props.setToken(hashParams.access_token);
-    }
+    const client_id = "b10ac7cc459d474e961a6603c15da715";
+    const redirect_uri = "https://spotifytask.vercel.app/";
+    const api_uri = "https://accounts.spotify.com/authorize";
+    const scope = [
+      "user-read-private",
+      "user-read-email",
+      "user-modify-playback-state",
+      "user-read-playback-state",
+      "user-read-currently-playing",
+      "user-read-recently-played",
+      "user-top-read",
+    ];
+    window.location.href = `${api_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope.join(
+      " "
+    )}&response_type=token&show_dialog=true`;
   };
   return (
     <Container>
